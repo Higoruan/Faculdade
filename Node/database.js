@@ -10,7 +10,15 @@ export class DatabaseMemory {
     // Método para listar todos os registros de vídeos
     list() {
         // Converte os valores do Map para um array e o retorna
-        return Array.from(this.#videos.values())
+        return Array.from(this.#videos.entries()).map((videoArray) => {
+            const id = videoArray[0]
+            const data = videoArray[1]
+
+            return{
+                id,
+                ...data
+            }
+        })
     }
 
     // Método para criar um novo registro de vídeo

@@ -1,4 +1,4 @@
-# Cria um novo registro de vídeo
+# CRIA O REGISTRO
 
 POST http://localhost:5000/videos
 Content-Type: application/json
@@ -11,6 +11,25 @@ Content-Type: application/json
 
 ###
 
-# Recupera o POST
+# RECUPERA O REGISTRO
 
 GET http://localhost:5000/videos
+
+###
+
+# ATUALIZA O REGISTRO
+
+PUT http://localhost:5000/videos/6ee30b37-b93c-4bde-8af7-ee70b6dc064f
+Content-Type: application/json
+
+{
+    "title": "Video 02",
+    "description": "Esse é o segundo vídeo da série.",
+    "duration": 180
+}
+
+###
+
+# DELETA O REGISTRO
+
+DELETE http://localhost:5000/videos/6ee30b37-b93c-4bde-8af7-ee70b6dc064f

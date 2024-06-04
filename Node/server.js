@@ -1,7 +1,7 @@
 import { fastify } from 'fastify' // Framework
-import { databaseMemory } from './database.js' // banco de memória importado
+import { DatabaseMemory } from './database.js' // banco de memória importado
 
-const database = new databaseMemory
+const database = new DatabaseMemory
 
 const server = fastify()
 
@@ -25,21 +25,47 @@ server.post('/videos', (request, reply) => {
 
 })
 
+// Rota para obter a lista de vídeos
 server.get('/videos', () => {
-   const videos = database.list()
+    // Obtém a lista de vídeos do banco de dados
+    const videos = database.list()
 
-   return videos
+    // Retorna a lista de vídeos
+    return videos
 })
 
-server.put('/videos/:id', () => {
-    return 'hello world'
+// Rota para atualizar um vídeo específico
+server.put('/videos/:id', (request, reply) => {
+    // Obtém o ID do vídeo a partir dos parâmetros da requisição
+    const videoId = request.params.id
+
+    // Obtém os dados do vídeo (título, descrição e duração) a partir do corpo da requisição
+    const { title, description, duration } = request.body
+
+    // Atualiza o vídeo no banco de dados com os novos dados
+    database.update(videoId, {
+        title,
+        description,
+        duration,
+    })
+
+    // Retorna uma resposta com status 204 (No Content)
+    return reply.status(204).send()
 })
 
-server.delete('/videos/:id', () => {
-    return 'Hello world'
+// Rota para deletar um vídeo específico
+server.delete('/videos/:id', (request, reply) => {
+    // Obtém o ID do vídeo a partir dos parâmetros da requisição
+    const videoId = request.params.id
+
+    // Deleta o vídeo do banco de dados
+    database.delete(videoId)
+
+    // Retorna uma resposta com status 204 (No Content)
+    return reply.status(204).send()
 })
 
-
+// Inicia o servidor na porta 5000
 server.listen({
     port: 5000,
 })
